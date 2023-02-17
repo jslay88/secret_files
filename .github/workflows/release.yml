@@ -1,0 +1,39 @@
+name: Package and Release
+# Build Python package for PyPi and GitGub release, and then publish a GitHub Release
+# Runs on semantic versioned tags only
+
+on:
+  push:
+    tags:
+      - "*.*.*"
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build, Upload, and Release
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v2.2.2
+        with:
+          python-version: "3.11"
+
+      - name: Install Build and Twine
+        run: |
+          python -m pip install --upgrade pip setuptools
+          pip install build twine
+      - name: Build Python Package and Upload to PyPi
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+          TWINE_REPOSITORY_URL: https://upload.pypi.org/legacy/
+        run: |
+          python -m build
+          python -m twine upload dist/*
+      - name: Create GitHub Release with Python Package
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/*
