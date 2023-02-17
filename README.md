@@ -1,4 +1,6 @@
 # Secret Files
+![Python](https://github.com/jslay88/secret_files/actions/workflows/python.yml/badge.svg)
+
 As file based secrets have become a more common place with technologies
 like Kubernetes, a better approach to more common patterns for Python is
 needed. This project aims to serve that purpose

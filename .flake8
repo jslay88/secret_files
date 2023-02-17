@@ -1,0 +1,9 @@
+[flake8]
+max-line-length = 79
+exclude =
+    # These are directories that it's a waste of time to traverse
+    .git,
+    .tox,
+    .venv,
+    venv,
+    __init__.py,
